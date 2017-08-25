@@ -1,0 +1,19 @@
+{
+  "name": "tenda-luch",
+  "version": "1.0.0",
+  "description": "Slack Bot to ask where do we want to get lunch",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "keywords": [
+    "bot",
+    "slack"
+  ],
+  "author": "João Pedro",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "slack": "^8.3.1"
+  }
+}
