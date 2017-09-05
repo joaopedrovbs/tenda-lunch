@@ -17,6 +17,7 @@ module.exports.run = function() {
       process.exit(1)
     }
     else{
+      console.log("Time to answer: ", time)
       console.log("Connected")
       postInit()
       return true
@@ -48,7 +49,7 @@ function postInit(){
       console.log("Posted at: ", data.ts)
       if (data.ok){
         react(data.ts)
-        setTimeout(check, config.timeMin*60*1000, data.ts)
+        setTimeout(check, time*60*1000, data.ts)
       }
       return true
     })
