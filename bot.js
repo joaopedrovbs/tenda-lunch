@@ -3,13 +3,29 @@ const assert = require("assert")
 const config = require('./config.json')
 const _ = require('lodash')
 
-const bot = slack.rtm.client()
-const token = config.token
 const channel = config.channel
 const time = config.time
 const rest = config.options
+const token = config.token
 
-var postInit = () => {
+module.exports.run = function() {
+  const bot = slack.rtm.client()
+  bot.hello(message => {
+    if(message.type != "hello"){
+      console.log("Not Able to Connect")
+      bot.close()
+      process.exit(1)
+    }
+    else{
+      console.log("Connected")
+      postInit()
+      return true
+    }
+  })
+  bot.listen({token})
+}
+
+function postInit(){
   let text = "Que tipo de spoleto vamos comer hoje? \n"
   + " As opções são: "
   + Object.keys(rest).map((result) => {
@@ -27,12 +43,17 @@ var postInit = () => {
       if (err){
         console.error(err)
         bot.close()
+        return false
       }
       console.log("Posted at: ", data.ts)
-      react(data.ts)
-      setTimeout(check, config.timeMin*60*1000, data.ts)
+      if (data.ok){
+        react(data.ts)
+        setTimeout(check, config.timeMin*60*1000, data.ts)
+      }
+      return true
     })
 }
+
 
 var react = (time) => {
   Object.keys(rest).map((result)=>{
@@ -47,7 +68,8 @@ var react = (time) => {
           console.error(err)
           bot.close()
           process.exit(1)
-        } 
+        }
+        return true
       })
   })
 }
@@ -61,12 +83,11 @@ var check = (time) => {
       if (err) {
         console.error(err)
       }
-    
+      console.log("Get Reactions")
       let reactions = answer.message.reactions
       
       if(Object.keys(rest).length != Object.keys(reactions).length) {
         console.error("Not All Reactions")
-        bot.close()
         return
       }
 
@@ -91,16 +112,16 @@ var check = (time) => {
               bot.close()
               process.exit(1)
             }
-            bot.close()
             if (!data.ok) {
               console.error("Message not Sent")
-              return
+              return 
             }
+            console.log("Draw")
             randomChoose(response.map((item) => {
               return _.find(rest, ['emoji', item.name]).name
             }))
           })
-          return
+          return true
       }
       
       let text = "E o vencedor é: "
@@ -108,7 +129,7 @@ var check = (time) => {
       + response[0].name 
       + ":]" 
       + _.find(rest, ['emoji', response[0].name]).name 
-      + "\n E já tá na Hora!!"
+      + "\n Vamos lá!!"
 
       slack.chat.postMessage({token,
       channel, 
@@ -121,48 +142,55 @@ var check = (time) => {
           console.error(err)
           bot.close()
         }
-        //Here goes new
-        randomChoose(_.find(rest, ['emoji', response[0].name]).name)
-        bot.close()      
+        console.log("Winner")
+        randomChoose(_.find(rest, ['emoji', response[0].name]).name)                                                                                                                                                      
+        return true
       })
+  return true
   })
 
 }
 
 var randomChoose = (answers) => {
-  if(!_.isArray(answers)){
-    if(answers == "Random"){
-      let options = _.map(rest, 'name', (o) => {
-        return o
-      })
-      console.log(options[getRandomInt(0, Object.keys(rest).length - 1)])
-      return
-    }
-    
-  }
+  
+  if(_.isArray(answers)){
     let escolha = getRandomInt(0, answers.length - 1)
-    
-    let text = "Minha sugestão é: " 
+
+    var text = "Minha sugestão é: " 
     + " [:" 
     +_.find(rest, ['name', answers[escolha]]).emoji
     + ":] "
     + answers[escolha]
-
-   slack.chat.postMessage({
-      token, 
-      channel, 
-      text, 
-      as_user: false, 
-      username: "Chefinho do almoço", 
-      icon_emoji: ":hocho:"}, 
-      (err, data) => {
-        if (err){
-          console.error(err)
-          bot.close()
-          process.exit(1)
-        }
-        bot.close()
+  }
+  if(answers == "Random"){
+    let options = _.map(rest, 'name', (o) => {
+      return o
+    })
+    let escolha = getRandomInt(0, Object.keys(rest).length - 1)
+    var text = "Minha sugestão é: " 
+    + " [:" 
+    +_.find(rest, ['name', options[escolha]]).emoji
+    + ":] "
+    + options[escolha]
+  }
+    if(text != null){
+      slack.chat.postMessage({
+        token, 
+        channel, 
+        text, 
+        as_user: false, 
+        username: "Chefinho do almoço", 
+        icon_emoji: ":hocho:"}, 
+        (err, data) => {
+          if (err){
+            console.error(err)
+            bot.close()
+            process.exit(1)
+          }
+          console.log("Sugesting")
+          return true
       })
+    }
 }
 
 
@@ -200,22 +228,5 @@ function testFilter() {
   assert.deepEqual(output, expected)
 }
 
-function startBot() {
-  bot.hello(message => {
-    if(message.type = "hello"){
-      console.log("Connected")
-      postInit()
-    }
-    else{
-      console.log("Not Able to Connect")
-      bot.close()
-      process.exit(1)
-    }
-  })
-  bot.listen({token})
-}
-
-
-startBot()
-
+//run()
 // testFilter()

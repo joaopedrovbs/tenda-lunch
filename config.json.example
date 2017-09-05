@@ -1,5 +1,5 @@
 {
- "token": "ENTER_YOUR_TOKEN",
+  "token": "ENTER_YOUR_TOKEN",
   "channel": "ENTER_YOUR_CHANNEL",
   "timeMin": TIME IN MINUTES,
   "options": {

@@ -13,6 +13,7 @@
   "author": "João Pedro",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.15.4",
     "lodash": "^4.17.4",
     "slack": "^8.3.1"
   }
