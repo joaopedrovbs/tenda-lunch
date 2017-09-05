@@ -1,5 +1,4 @@
 {
-  "options": {
     "opt1": {"name": "Random" , "emoji":"game_die"},
     "opt2": {"name": "Ideal" , "emoji":"meat_on_bone"},
     "opt3": {"name": "Shopping" , "emoji":"spaghetti"},
@@ -9,5 +8,4 @@
     "opt7": {"name": "Amigas de Verdade" , "emoji":"dancers"},
     "opt8": {"name": "PEDREIRAO" , "emoji":"hammer_and_pick"},
     "opt9": {"name": "Bar do Peixe" , "emoji":"fish"}
-  }
 }

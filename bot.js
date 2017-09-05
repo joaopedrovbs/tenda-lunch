@@ -1,11 +1,10 @@
 const slack = require("slack")
 const assert = require("assert")
-const config = require('./config.json')
+const rest = require('./config.json')
 const _ = require('lodash')
 
 const channel = process.env.channel
 const time = process.env.timeMin
-const rest = config.options
 const token = process.env.token
 
 module.exports.run = function() {

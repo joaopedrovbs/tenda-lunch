@@ -1,6 +1,6 @@
 {
   "name": "tenda-lunch",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Slack Bot to ask where do we want to get lunch",
   "main": "server.js",
   "scripts": {
