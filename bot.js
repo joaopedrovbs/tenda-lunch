@@ -3,10 +3,10 @@ const assert = require("assert")
 const config = require('./config.json')
 const _ = require('lodash')
 
-const channel = config.channel
-const time = config.time
+const channel = process.env.channel
+const time = process.env.timeMin
 const rest = config.options
-const token = config.token
+const token = process.env.token
 
 module.exports.run = function() {
   const bot = slack.rtm.client()

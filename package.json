@@ -2,9 +2,9 @@
   "name": "tenda-lunch",
   "version": "1.0.0",
   "description": "Slack Bot to ask where do we want to get lunch",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "node index"
+    "start": "node server.js"
   },
   "keywords": [
     "bot",
