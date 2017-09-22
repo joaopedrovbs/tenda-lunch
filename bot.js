@@ -156,6 +156,11 @@ var randomChoose = (answers) => {
   if(_.isArray(answers)){
     let escolha = getRandomInt(0, answers.length - 1)
 
+    if(answers[escolha] == "Random"){
+      answers = "Random"
+      return
+    }
+
     var text = "Minha sugestão é: " 
     + " [:" 
     +_.find(rest, ['name', answers[escolha]]).emoji
