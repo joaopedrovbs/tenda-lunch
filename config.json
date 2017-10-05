@@ -7,5 +7,6 @@
     "opt6": {"name": "Lugar Novo?" , "emoji":"question"},
     "opt7": {"name": "Amigas de Verdade" , "emoji":"dancers"},
     "opt8": {"name": "PEDREIRAO" , "emoji":"hammer_and_pick"},
-    "opt9": {"name": "Bar do Peixe" , "emoji":"fish"}
+    "opt9": {"name": "Bar do Peixe" , "emoji":"fish"},
+    "opt10": {"name": "Pastel" , "emoji":"bread"}
 }
